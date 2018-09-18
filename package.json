@@ -1,0 +1,10 @@
+{
+  "name": "vue-ioc",
+  "version": "0.1.0",
+  "description": "Vue plugin for DIC/IOC",
+  "main": "index.js",
+  "repository": "https://github.com/heywhy/vue-ioc.git",
+  "author": "atanda rasheed <atandarash@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
