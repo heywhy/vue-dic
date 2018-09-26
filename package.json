@@ -21,7 +21,7 @@
     "watch": "tsc -w -p ."
   },
   "dependencies": {
-    "dic-js": "^0.7.0"
+    "dic-js": "^0.8.0"
   },
   "devDependencies": {
     "vue": "^2.5.17",
