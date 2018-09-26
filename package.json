@@ -1,5 +1,5 @@
 {
-  "name": "vue-ioc",
+  "name": "vue-dic",
   "version": "0.1.0",
   "description": "Vue plugin for DIC/IOC",
   "main": "out/index.js",

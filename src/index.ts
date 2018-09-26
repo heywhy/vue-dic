@@ -29,7 +29,7 @@ const install: PluginFunction<VueIocOption>  = (_Vue: VueConstructor, options) =
   // throw new Error(`[vue-ioc]: plugin registered already, tell plugins authors to export their container.`)
   let {containers} = <VueIocOption>options
   if (!containers) {
-    throw new Error(`[vue-ioc]: containers are required!`)
+    throw new Error(`[vue-dic]: containers are required!`)
   }
   if (containers && !Array.isArray(containers)) {
     containers = [containers]
@@ -75,7 +75,7 @@ class Resolver {
     index: number = 0
   ): any {
     if ((index + 1) > this.containers.length) {
-      throw new Error(`[vue-ioc]: could not resolve '${type}' from containers`)
+      throw new Error(`[vue-dic]: could not resolve '${type}' from containers`)
     }
     try {
       return this.containers[index].make(type, parameters)
