@@ -1,0 +1,9 @@
+# Dependency Injection Container for Vue
+
+```bash
+# install using yarn
+yarn add vue-dic
+
+# install using npm
+npm install vue-dic
+```

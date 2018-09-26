@@ -5,7 +5,7 @@ heroImage: '/img/logo.png'
 tagline: ''
 actionText: 'Introduction'
 actionLink: '/introduction'
-description: 'Dependency Inversion Container for Vue'
+description: 'Dependency Injection Container for Vue'
 footer: MIT Licensed | Copyright © 2018-present Atanda Rasheed
 features:
 - title: Simplicity
@@ -18,8 +18,8 @@ features:
 
 ```bash
 # install using yarn
-yarn add vue-ioc
+yarn add vue-dic
 
 # install using npm
-npm install vue-ioc
+npm install vue-dic
 ```

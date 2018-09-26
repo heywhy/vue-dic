@@ -10,10 +10,10 @@ editLink: true
 This is plugin for vue, which allows dependency injection.
 
 ```js
-import VueIOC from 'vue-ioc'
+import VueDIC from 'vue-dic'
 import { getContext } from 'dic-js'
 
-Vue.use(VueIOC, {
+Vue.use(VueDIC, {
   containers: [getContext()]
 })
 
