@@ -2,9 +2,30 @@
   "name": "vue-ioc",
   "version": "0.1.0",
   "description": "Vue plugin for DIC/IOC",
-  "main": "index.js",
+  "main": "out/index.js",
+  "typings": "out/index.d.ts",
   "repository": "https://github.com/heywhy/vue-ioc.git",
-  "author": "atanda rasheed <atandarash@gmail.com>",
+  "author": "Atanda Rasheed Ayomide <atandarash@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "files": [
+    "src/",
+    "out/"
+  ],
+  "scripts": {
+    "build": "bash ./scripts/build",
+    "clean": "bash ./scripts/clean",
+    "serve:docs": "vuepress dev doc_pages",
+    "build:docs": "vuepress build doc_pages -d docs",
+    "compile": "tsc -p .",
+    "watch": "tsc -w -p ."
+  },
+  "dependencies": {
+    "dic-js": "^0.7.0"
+  },
+  "devDependencies": {
+    "vue": "^2.5.17",
+    "vue-class-component": "^6.2.0",
+    "vuepress": "^0.14.4"
+  }
 }

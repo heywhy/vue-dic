@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+cwd=$(pwd)
+out=$cwd/out
+docs=$cwd/docs
+
+if [[ -d $docs ]]; then
+  rm -d -r $docs
+fi;
+
+if [[ -d $out ]]; then
+  rm -d -r $out
+fi;
