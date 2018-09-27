@@ -7,3 +7,5 @@ yarn add vue-dic
 # install using npm
 npm install vue-dic
 ```
+
+Read [documentation](https://heywhy.github.io/vue-dic/).
