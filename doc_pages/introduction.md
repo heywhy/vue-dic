@@ -7,7 +7,7 @@ editLink: true
 
 # Introduction
 
-This is plugin for vue, which helps with dependency injection, it assumes the provided container implements [**dic-js**](https://heywhy.github.com/dic-js) container interface.
+This is plugin for vue, which helps with dependency injection, it assumes the provided container implements [**dic-js**](https://heywhy.github.io/dic-js/) container interface.
 
 ## Installation
 
