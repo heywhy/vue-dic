@@ -19,12 +19,13 @@ declare module 'vue/types/options' {
 export interface VueIocOption {
     containers: Container[] | Container;
 }
-declare const install: PluginFunction<VueIocOption>;
+declare const install: PluginFunction<VueIocOption | Container[]>;
 declare class Resolver {
     protected containers: Container[];
     constructor(containers: Container[]);
     make(service: string | ServiceFactory, parameters?: any[]): any;
-    protected _get(type: string | ServiceFactory, parameters?: any, index?: number): any;
+    tagged(tag: string): any[];
+    protected _call(type: string | ServiceFactory, callback: (container: Container) => any, index?: number): any | never;
 }
 export default install;
 export { install };

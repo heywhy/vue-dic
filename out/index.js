@@ -11,15 +11,17 @@ var __values = (this && this.__values) || function (o) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var install = function (_Vue, options) {
-    // throw new Error(`[vue-ioc]: plugin registered already, tell plugins authors to export their container.`)
-    var containers = options.containers;
-    if (!containers) {
-        throw new Error("[vue-ioc]: containers are required!");
+    makeErrorIf(!options);
+    var _containers = [];
+    if (Array.isArray(options)) {
+        _containers = options;
     }
-    if (containers && !Array.isArray(containers)) {
-        containers = [containers];
+    else {
+        var containers = options.containers;
+        _containers = wrapArray(containers);
     }
-    _Vue.prototype.$container = new Resolver(containers);
+    makeErrorIf(_containers.length < 1);
+    _Vue.prototype.$container = new Resolver(_containers);
     _Vue.mixin({
         beforeCreate: function () {
             var _this = this;
@@ -44,7 +46,7 @@ var install = function (_Vue, options) {
                     injector.apply(this, results);
                     return;
                 }
-                throw new Error("Injector function not found!");
+                makeErrorIf(true, "injector function not found!");
             }
             if (container) {
                 Object.keys(container)
@@ -62,21 +64,34 @@ var Resolver = /** @class */ (function () {
     }
     Resolver.prototype.make = function (service, parameters) {
         if (parameters === void 0) { parameters = []; }
-        return this._get(service, parameters);
+        return this._call(service, function (container) { return container.make(service, parameters); });
     };
-    Resolver.prototype._get = function (type, parameters, index) {
-        if (parameters === void 0) { parameters = []; }
+    Resolver.prototype.tagged = function (tag) {
+        return this._call(tag, function (container) { return container.tagged(tag); });
+    };
+    Resolver.prototype._call = function (type, callback, index) {
         if (index === void 0) { index = 0; }
         if ((index + 1) > this.containers.length) {
-            throw new Error("[vue-ioc]: could not resolve '" + type + "' from containers");
+            throw new Error("[vue-dic]: could not resolve '" + type + "' from containers");
         }
         try {
-            return this.containers[index].make(type, parameters);
+            return callback(this.containers[index]);
         }
         catch (e) {
-            return this._get(type, parameters, ++index);
+            return this._call(type, callback, ++index);
         }
     };
     return Resolver;
 }());
+function wrapArray(v) {
+    if (!Array.isArray(v)) {
+        return [v];
+    }
+    return v;
+}
+function makeErrorIf(result, message) {
+    if (message === void 0) { message = 'containers are required!'; }
+    if (result)
+        throw new Error("[vue-dic]: " + message);
+}
 exports.default = install;

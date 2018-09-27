@@ -25,17 +25,17 @@ export interface VueIocOption {
   containers: Container[]|Container
 }
 
-const install: PluginFunction<VueIocOption>  = (_Vue: VueConstructor, options) => {
-  // throw new Error(`[vue-ioc]: plugin registered already, tell plugins authors to export their container.`)
-  let {containers} = <VueIocOption>options
-  if (!containers) {
-    throw new Error(`[vue-dic]: containers are required!`)
+const install: PluginFunction<VueIocOption|Container[]>  = (_Vue: VueConstructor, options) => {
+  makeErrorIf(!options)
+  let _containers: Container[] = []
+  if (Array.isArray(options)) {
+    _containers = options
+  } else {
+    let {containers} = <VueIocOption>options
+    _containers = wrapArray(containers)
   }
-  if (containers && !Array.isArray(containers)) {
-    containers = [containers]
-  }
-
-  _Vue.prototype.$container = new Resolver(containers)
+  makeErrorIf(_containers.length < 1)
+  _Vue.prototype.$container = new Resolver(_containers)
 
   _Vue.mixin({
     beforeCreate() {
@@ -49,12 +49,12 @@ const install: PluginFunction<VueIocOption>  = (_Vue: VueConstructor, options) =
           injector.apply(this, results)
           return
         }
-        throw new Error(`Injector function not found!`)
+        makeErrorIf(true, `injector function not found!`)
       }
       if (container) {
         Object.keys(container)
           .forEach((key: string) => {
-            (<any>this)[key] = this.$container.make(container[key])
+            (<any>this)[key] = this.$container.make((<any>container)[key])
           })
       }
     }
@@ -66,23 +66,41 @@ class Resolver {
   constructor(protected containers: Container[]) {}
 
   make(service: string|ServiceFactory, parameters: any[] = []) {
-    return this._get(service, parameters)
+    return this._call(service, (container) => container.make(service, parameters))
   }
 
-  protected _get(
+  tagged(tag: string): any[] {
+    return this._call(tag, (container) => container.tagged(tag))
+  }
+
+  protected _call(
     type: string|ServiceFactory,
-    parameters: any = [],
+    callback: (container: Container) => any,
     index: number = 0
-  ): any {
+  ): any|never {
     if ((index + 1) > this.containers.length) {
       throw new Error(`[vue-dic]: could not resolve '${type}' from containers`)
     }
     try {
-      return this.containers[index].make(type, parameters)
+      return callback(this.containers[index])
     } catch (e) {
-      return this._get(type, parameters, ++index)
+      return this._call(type, callback, ++index)
     }
   }
+}
+
+function wrapArray(v: any): any[] {
+  if (!Array.isArray(v)) {
+    return [v]
+  }
+  return v
+}
+
+function makeErrorIf(
+  result: boolean,
+  message: string = 'containers are required!'
+) {
+  if (result) throw new Error(`[vue-dic]: ${message}`)
 }
 
 export default install

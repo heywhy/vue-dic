@@ -9,11 +9,11 @@ description: 'Dependency Injection Container for Vue'
 footer: MIT Licensed | Copyright © 2018-present Atanda Rasheed
 features:
 - title: Simplicity
-  description:
+  details: It's simple and straight.
 - title: Vue
-  description:
+  details: This is built for vue.
 - title: DicJS
-  description:
+  details: Assumes dic-js as a core container.
 ---
 
 ```bash
