@@ -103,14 +103,14 @@ The order of the containers is important, e.g. if two containers has the the sam
 #### Method `make`
 This resolves a dependency from the list of containers.
 
-* parameters:
+* parameter:
   * dependency: `string`|`any` parameter accepted by **dic-js**
 * returns: `any`
 
-#### Method `resolve`
+#### Method `tagged`
 
 The resolves tagged dependencies.
 
-* parameter
+* parameter:
   * tagId: `string`
 * returns: `any[]`
